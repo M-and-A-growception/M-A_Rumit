@@ -1,0 +1,8 @@
+/* colors.css */
+:root {
+  --primary-bg: #f3f4f6; /* Light gray */
+  --primary-text: #1f2937; /* Dark text */
+  --secondary-text: #6b7280; /* Lighter text */
+  --button-bg: #3b82f6; /* Blue button */
+  --button-hover-bg: #2563eb; /* Darker blue */
+}
