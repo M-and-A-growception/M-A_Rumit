@@ -1,0 +1,12 @@
+/* fonts.css */
+:root {
+  --primary-font: 'Inter', sans-serif;
+  --heading-font: 'Roboto', sans-serif;
+}
+
+body {
+  font-family: var(--primary-font);
+}
+h1, h2, h3 {
+  font-family: var(--heading-font);
+}
