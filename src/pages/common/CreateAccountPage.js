@@ -74,97 +74,101 @@ const CreateAccountPage = () => {
 
   return (
     <AuthenticationLayout>     <>
-      <h1 className="text-2xl font-bold text-black mb-4 font-sans">
+      <h1 className="text-xl font-bold text-black mb-4 font-sans">
         Create Account
       </h1>
 
       <form onSubmit={handleRegister}>
-        {/* First Name */}
-        <div className="mb-4">
-          <label className="block text-secondary-cyan font-medium mb-2" htmlFor="firstName">
-            First Name
-          </label>
-          <input
-            ref={user_firstname}
-            type="text"
-            id="firstName"
-            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[var(--button-bg)] placeholder:text-sm placeholder:font-normal placeholder:text-custom-font-grey"
+        <div className="mb-4 flex gap-4">
+          {/* First Name */}
+          <div className="flex-1">
+            <label className="block text-secondary-cyan font-medium text-base mb-2" htmlFor="firstName">
+              First Name
+            </label>
+            <input
+              ref={user_firstname}
+              type="text"
+              id="firstName"
+              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[var(--button-bg)] placeholder:text-xs placeholder:font-normal placeholder:text-custom-font-grey"
 
-            placeholder="Enter your first name"
-          />
-        </div>
+              placeholder="Enter your first name"
+            />
+          </div>
 
-        {/* Last Name */}
-        <div className="mb-4">
-          <label className="block text-secondary-cyan font-medium mb-2" htmlFor="lastName">
-            Last Name
-          </label>
-          <input
-            ref={user_lastname}
-            type="text"
-            id="lastName"
-            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[var(--button-bg)] placeholder:text-sm placeholder:font-normal placeholder:text-custom-font-grey"
+          {/* Last Name */}
+          <div className="flex-1">
+            <label className="block text-secondary-cyan font-medium text-base mb-2" htmlFor="lastName">
+              Last Name
+            </label>
+            <input
+              ref={user_lastname}
+              type="text"
+              id="lastName"
+              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[var(--button-bg)] placeholder:text-xs placeholder:font-normal placeholder:text-custom-font-grey"
 
-            placeholder="Enter your last name"
-          />
+              placeholder="Enter your last name"
+            />
+          </div>
         </div>
 
         {/* Email */}
         <div className="mb-4">
-          <label className="block text-secondary-cyan font-medium mb-2" htmlFor="email">
+          <label className="block text-secondary-cyan font-medium text-base mb-2" htmlFor="email">
             Email Address
           </label>
           <input
             ref={user_email}
             type="email"
             id="email"
-            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[var(--button-bg)] placeholder:text-sm placeholder:font-normal placeholder:text-custom-font-grey"
+            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[var(--button-bg)] placeholder:text-xs placeholder:font-normal placeholder:text-custom-font-grey"
 
             placeholder="Enter your email"
           />
         </div>
         <div className="mb-4">
-          <label className="block text-secondary-cyan font-medium mb-2" htmlFor="email">
+          <label className="block text-secondary-cyan font-medium text-base mb-2" htmlFor="email">
             Phone Number
           </label>
           <input
             ref={user_phone}
             type="number"
             id="phone"
-            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[var(--button-bg)] placeholder:text-sm placeholder:font-normal placeholder:text-custom-font-grey"
+            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[var(--button-bg)] placeholder:text-xs placeholder:font-normal placeholder:text-custom-font-grey"
 
             placeholder="Enter your Phone Number"
           />
         </div>
 
-        {/* Password */}
-        <div className="mb-4">
-          <label className="block text-secondary-cyan font-medium mb-2" htmlFor="password">
-            Password
-          </label>
-          <input
-            ref={user_password}
-            type="password"
-            id="password"
-            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[var(--button-bg)] placeholder:text-sm placeholder:font-normal placeholder:text-custom-font-grey"
+        <div className="mb-4 flex gap-4">
+          {/* Password */}
+          <div className="mb-4">
+            <label className="block text-secondary-cyan font-medium text-base mb-2" htmlFor="password">
+              Password
+            </label>
+            <input
+              ref={user_password}
+              type="password"
+              id="password"
+              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[var(--button-bg)] placeholder:text-xs placeholder:font-normal placeholder:text-custom-font-grey"
 
-            placeholder="Enter your password"
-          />
-        </div>
+              placeholder="Enter your password"
+            />
+          </div>
 
-        {/* Confirm Password */}
-        <div className="mb-4">
-          <label className="block text-secondary-cyan font-medium mb-2" htmlFor="confirmPassword">
-            Confirm Password
-          </label>
-          <input
-            ref={user_confpassword}
-            type="password"
-            id="confirmPassword"
-            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[var(--button-bg)] placeholder:text-sm placeholder:font-normal placeholder:text-custom-font-grey"
+          {/* Confirm Password */}
+          <div className="mb-4">
+            <label className="block text-secondary-cyan font-medium text-base mb-2" htmlFor="confirmPassword">
+              Confirm Password
+            </label>
+            <input
+              ref={user_confpassword}
+              type="password"
+              id="confirmPassword"
+              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[var(--button-bg)] placeholder:text-xs placeholder:font-normal placeholder:text-custom-font-grey"
 
-            placeholder="Confirm your password"
-          />
+              placeholder="Confirm your password"
+            />
+          </div>
         </div>
 
         {/* User Type Selection (Buyer or Seller) */}
@@ -179,7 +183,7 @@ const CreateAccountPage = () => {
               onChange={handleUserTypeChange}
               className="mr-2"
             />
-            <label htmlFor="seller" className="text-secondary-cyan">
+            <label htmlFor="seller" className="text-secondary-cyan font-medium text-base">
               Seller
             </label>
           </div>
@@ -193,7 +197,7 @@ const CreateAccountPage = () => {
               onChange={handleUserTypeChange}
               className="mr-2"
             />
-            <label htmlFor="buyer" className="text-secondary-cyan">
+            <label htmlFor="buyer" className="text-secondary-cyan font-medium text-base">
               Buyer
             </label>
           </div>
