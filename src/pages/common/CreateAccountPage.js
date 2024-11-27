@@ -4,7 +4,7 @@ import axios from "axios";
 
 const CreateAccountPage = () => {
 
-  const [userType, setUserType] = useState(1);
+  const [userType, setUserType] = useState(null);
   const user_firstname =useRef();
   const user_lastname =useRef();
   const user_email =useRef();
@@ -43,7 +43,7 @@ const CreateAccountPage = () => {
       const response = await axios.post(`http://localhost:8000/registration/addbuyerregistration`, data);
   
       console.log('registration successful:', response.data);
-      alert("successfully login");
+      alert("successfully register");
     } catch (error) {
       // Handle errors, such as network issues or invalid responses
       if (error.response) {
@@ -124,7 +124,7 @@ const CreateAccountPage = () => {
             </label>
             <input
               ref={user_phone}
-              type="number"
+              type="text"
               id="phone"
               className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[var(--button-bg)] placeholder:text-sm placeholder:font-normal placeholder:text-custom-font-grey"
               placeholder="Enter your Phone Number"
@@ -167,7 +167,6 @@ const CreateAccountPage = () => {
                 id="seller"
                 name="userType"
                 value={1}
-                checked={userType === 1}
                 onChange={handleUserTypeChange}
                 className="mr-2"
               />
@@ -181,7 +180,6 @@ const CreateAccountPage = () => {
                 id="buyer"
                 name="userType"
                 value={2}
-                checked={userType === 2}
                 onChange={handleUserTypeChange}
                 className="mr-2"
               />
