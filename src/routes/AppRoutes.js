@@ -4,6 +4,7 @@ import LoginPage from '../pages/common/LoginPage';
 import ForgotPasswordPage from '../pages/common/ForgotPasswordPage';
 import CreateAccountPage from '../pages/common/CreateAccountPage';
 import ResetPassword from "../pages/common/ResetPassword";
+import Home from "../pages/Home"
 
 const AppRoutes = () => {
 //   const isAuthenticated = localStorage.getItem('auth'); // Example: Check authentication status
@@ -11,9 +12,10 @@ const AppRoutes = () => {
   return (
     <Routes>
           <Route path="/" element={<LoginPage />} />
-      <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-      <Route path="/create-account" element={<CreateAccountPage />} />
-      <Route path="/resetpassword/:id" element={<ResetPassword />} />
+          <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+          <Route path="/create-account" element={<CreateAccountPage />} />
+          <Route path="/resetpassword/:id" element={<ResetPassword />} />
+          <Route path="/home" element={<Home/>}/>
 
     </Routes>
     
