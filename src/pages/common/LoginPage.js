@@ -3,7 +3,6 @@ import { useRef } from "react";
 // import { useNavigate } from 'react-router-dom';
 import { Link } from "react-router-dom";
 import axios from "axios";
-import URL from "../../assets/url/url";
 
 const LoginPage = () => {
 
@@ -22,10 +21,17 @@ const LoginPage = () => {
         }
 
         try {
-          const response = await axios.post(`http://localhost:8000/registration/buyerlogin`, data);
+          const response = await axios.post(`http://localhost:8000/registration/buyerlogin`, data, {
+            //AxiosRequestConfig parameter
+            withCredentials: true //correct
+          });
       
           console.log('Login successful:', response.data);
           alert("successfully login");
+
+          //for store in localstorage jwt token
+          sessionStorage.setItem('jwtToken',response?.data?.accessToken);
+
         } catch (error) {
           // Handle errors, such as network issues or invalid responses
           if (error.response) {
