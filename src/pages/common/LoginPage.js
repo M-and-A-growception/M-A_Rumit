@@ -1,37 +1,79 @@
-import React  from "react";
+import React, { useEffect }  from "react";
 import { useRef } from "react";
 // import { useNavigate } from 'react-router-dom';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const LoginPage = () => {
-
-
     const useremailRef = useRef(null); // Ref for username input
     const passwordRef = useRef(null); // Ref for password input
+    const navigate = useNavigate();
+    const intervalRef = useRef(null); 
 
-    const handleLogin =async (event) => {
-      event.preventDefault();
-      // Access the current value of the input fields using refs
+      
+
+    const HandleRefreshToken=async()=>{
+      try{
+        const response= await axios.post('http://localhost:8000/registration/RefreshToken',{},{withCredentials:true});
+        console.log("refresh token intialized",response)
+      }
+      catch (error) {
+        // Handle errors, such as network issues or invalid responses
+        if (error.response) {
+          // The server responded with a status code outside of 2xx
+          console.error('Error response here:', error.response);
+          alert(`Login again: ${error.response.status || 'Unknown error'}`);
+          clearInterval(intervalRef.current)
+          sessionStorage.removeItem('jwtToken')
+        } else if (error.request) {
+          // The request was made but no response was received
+          console.error('Error request:', error.request);
+          alert('refhresh token failed: No response from server');
+        }else {
+          // Something else happened (e.g., invalid configuration)
+          console.error('Error message:', error.message);
+          alert(`token refhresh failed: ${error.message}`);
+        }
+      }
+    }
+
+    const tokenInterval=()=>{
+      intervalRef.current=setInterval(()=>{
+          HandleRefreshToken();
+        },60 * 1000);
+    }
+
+    tokenInterval();
+
+    
+    // const tokenInterval=setInterval(()=>{
+      //   HandleRefreshToken();
+      // },60*1000);
+      // return()=>(clearInterval(tokenInterval));
+      
+      const handleLogin =async (event) => {
+        event.preventDefault();
+        // Access the current value of the input fields using refs
         const email = useremailRef.current.value;
         const password = passwordRef.current.value;
         const data={
           email,
           password
         }
-
+        
         try {
           const response = await axios.post(`http://localhost:8000/registration/buyerlogin`, data, {
             //AxiosRequestConfig parameter
             withCredentials: true //correct
           });
-      
+          
           console.log('Login successful:', response.data);
           alert("successfully login");
-
+          
           //for store in localstorage jwt token
           sessionStorage.setItem('jwtToken',response?.data?.accessToken);
-
+          navigate("/home")
+          
         } catch (error) {
           // Handle errors, such as network issues or invalid responses
           if (error.response) {
@@ -48,8 +90,9 @@ const LoginPage = () => {
             alert(`Login failed: ${error.message}`);
           }
         }
-    
-    };
+        
+      };
+  
 
     return (
       <div className="min-h-screen bg-[var(--primary-bg)] flex items-center justify-center">
