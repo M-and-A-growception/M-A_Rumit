@@ -1,74 +1,100 @@
+
 import React, { useEffect } from "react";
 import { useRef } from "react";
 // import { useNavigate } from 'react-router-dom';
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import {TOKEN_STATUS,JWT_STATUS, FIRST_NAME} from './../../redux-saga/action';
 
 const LoginPage = () => {
-  const useremailRef = useRef(null); // Ref for username input
-  const passwordRef = useRef(null); // Ref for password input
-  const navigate = useNavigate();
-  const intervalRef = useRef(null);
+    const useremailRef = useRef(null); // Ref for username input
+    const passwordRef = useRef(null); // Ref for password input
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const RefreshToken=document.cookie;
 
-  const HandleRefreshToken = async () => {
-    try {
-      const response = await axios.post(
-        "http://localhost:8000/registration/RefreshToken",
-        {},
-        { withCredentials: true }
-      );
-      console.log("refresh token intialized", response);
-    } catch (error) {
-      // Handle errors, such as network issues or invalid responses
-      if (error.response) {
-        // The server responded with a status code outside of 2xx
-        console.error("Error response here:", error.response);
-        alert(`Login again: ${error.response.status || "Unknown error"}`);
-        clearInterval(intervalRef.current);
-        sessionStorage.removeItem("jwtToken");
-      } else if (error.request) {
-        // The request was made but no response was received
-        console.error("Error request:", error.request);
-        alert("refhresh token failed: No response from server");
-      } else {
-        // Something else happened (e.g., invalid configuration)
-        console.error("Error message:", error.message);
-        alert(`token refhresh failed: ${error.message}`);
+
+    const HandleRefreshToken=async()=>{
+      try{
+        const response= await axios.post('http://localhost:8000/registration/RefreshToken',{},{withCredentials:true});
+        console.log("JWT token intialized",response)
+      }
+      catch (error) {
+        // Handle errors, such as network issues or invalid responses
+        if (error.response) {
+          // The server responded with a status code outside of 2xx
+          console.error('Error response here:', error.response);
+          alert(`Login again: ${error.response.status || 'Unknown error'}`);
+
+        } else if (error.request) {
+          // The request was made but no response was received
+          console.error('Error request:', error.request);
+          alert('refresh token failed: No response from server');
+        }else {
+          // Something else happened (e.g., invalid configuration)
+          console.error('Error message:', error.message);
+          alert(`token refhresh failed: ${error.message}`);
+        }
       }
     }
   };
 
-  const tokenInterval = () => {
-    intervalRef.current = setInterval(() => {
-      HandleRefreshToken();
-    }, 60 * 1000);
-  };
-
-  tokenInterval();
-
-  // const tokenInterval=setInterval(()=>{
-  //   HandleRefreshToken();
-  // },60*1000);
-  // return()=>(clearInterval(tokenInterval));
-
-  const handleLogin = async (event) => {
-    event.preventDefault();
-    // Access the current value of the input fields using refs
-    const email = useremailRef.current.value;
-    const password = passwordRef.current.value;
-    const data = {
-      email,
-      password,
-    };
-
-    try {
-      const response = await axios.post(
-        `http://localhost:8000/registration/buyerlogin`,
-        data,
-        {
-          //AxiosRequestConfig parameter
-          withCredentials: true, //correct
+          HandleRefreshToken();
+      
+      const handleLogin =async (event) => {
+        event.preventDefault();
+        // Access the current value of the input fields using refs
+        const email = useremailRef.current.value;
+        const password = passwordRef.current.value;
+        const data={
+          email,
+          password
         }
+        
+        try {
+          const response = await axios.post(`http://localhost:8000/registration/buyerlogin`, data, {
+            //AxiosRequestConfig parameter
+            withCredentials: true //correct
+          });
+          
+          const refreshtoken = response.data.jwtToken; // From response body
+          const refreshTokenHeader = response.headers.refreshtoken; // From response header
+          alert("successfully login");
+          console.log("====>",refreshtoken)
+          
+          //for store in localstorage jwt token
+          sessionStorage.setItem('jwtToken',response?.data?.jwtToken);
+          dispatch(FIRST_NAME(response?.data?.user?.first_name))
+
+
+          //for storing the cookie name refreshToken
+          const value = `; ${document.cookie}`;
+          const cookie = value.split(`; refreshToken=`);
+          dispatch(TOKEN_STATUS(cookie[1]));
+
+          dispatch(JWT_STATUS(sessionStorage.getItem('jwtToken')))
+
+
+          
+          navigate("/home")
+          
+        } catch (error) {
+          // Handle errors, such as network issues or invalid responses
+          if (error.response) {
+            // The server responded with a status code outside of 2xx
+            console.error('Error response:', error.response);
+            alert(`Login failed: ${error.response.data.message || 'Unknown error'}`);
+          } else if (error.request) {
+            // The request was made but no response was received
+            console.error('Error request:', error.request);
+            alert('Login failed: No response from server');
+          } else {
+            // Something else happened (e.g., invalid configuration)
+            console.error('Error message:', error.message);
+            alert(`Login failed: ${error.message}`);
+          }
+}
       );
 
       console.log("Login successful:", response.data);
