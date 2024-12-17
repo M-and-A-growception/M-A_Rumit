@@ -12,36 +12,36 @@ function ForgotPasswordPage() {
 
     event.preventDefault();
     // Access the current value of the input fields using refs
-      const email = emailRef.current.value;
-      const data={
-        email
-      }
+    const email = emailRef.current.value;
+    const data = {
+      email
+    }
 
-      try {
-        const response = await axios.post(`http://localhost:8000/forgotpasswordRoute/forgotpassword`, data);//need to be changed
-    
-        console.log('data fetching via email successful:', response.data.reply[0]);
-        alert("successfully sent")
+    try {
+      const response = await axios.post(`http://localhost:8000/forgotpasswordRoute/forgotpassword`, data);//need to be changed
 
-        //sending to the reset link function
-        
-      } catch (error) {
-        // Handle errors, such as network issues or invalid responses
-        if (error.response) {
-          // The server responded with a status code outside of 2xx
-          console.error('Error response:', error.response);
-          alert(`You are not register yet, please register first!`);
-        } else if (error.request) {
-          // The request was made but no response was received
-          console.error('Error request:', error.request);
-          alert('Login failed: No response from server');
-        } else {
-          // Something else happened (e.g., invalid configuration)
-          console.error('Error message:', error.message);
-          alert(`You are not register yet, please register first: ${error.message}`);
-        }
+      console.log('data fetching via email successful:', response.data.reply[0]);
+      alert("successfully sent")
+
+      //sending to the reset link function
+
+    } catch (error) {
+      // Handle errors, such as network issues or invalid responses
+      if (error.response) {
+        // The server responded with a status code outside of 2xx
+        console.error('Error response:', error.response);
+        alert(`You are not register yet, please register first!`);
+      } else if (error.request) {
+        // The request was made but no response was received
+        console.error('Error request:', error.request);
+        alert('Login failed: No response from server');
+      } else {
+        // Something else happened (e.g., invalid configuration)
+        console.error('Error message:', error.message);
+        alert(`You are not register yet, please register first: ${error.message}`);
       }
-  
+    }
+
   };
 
 
